@@ -1,0 +1,38 @@
+repos:
+  - repo: local
+
+    hooks:
+      - id: mypy
+        name: mypy checking
+        entry: mypy
+        language: system
+        always_run: true
+        pass_filenames: false
+        args: [--strict, . ]
+        stages: [ commit ]
+
+      - id: isort
+        name: isort formatting
+        entry: isort
+        language: system
+        always_run: true
+        pass_filenames: false
+        args: [ . ]
+        stages: [ commit ]
+
+      - id: black
+        name: black formatting
+        entry: black
+        language: system
+        always_run: true
+        pass_filenames: false
+        args: [ . ]
+        stages: [ commit ]
+
+      - id: flake8
+        name: flake8 checking
+        entry: flake8
+        language: system
+        always_run: true
+        pass_filenames: false
+        stages: [ commit ]
