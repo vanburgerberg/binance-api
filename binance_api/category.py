@@ -1,13 +1,11 @@
 from typing import Optional as _Optional
 from typing import Type as _Type
-from typing import TypeVar as _TypeVar
 
 from pydantic import BaseModel as _BaseModel
 
 from binance_api.api import ABCAPI as _ABCAPI
+from binance_api.api.abc import ResponseModel as _ResponseModel
 from binance_api.types import SecurityLevel as _SecurityLevel
-
-_ResponseModel = _TypeVar("_ResponseModel")
 
 
 class Category(_ABCAPI):

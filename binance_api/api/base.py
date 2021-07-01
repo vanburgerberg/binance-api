@@ -82,6 +82,6 @@ class API(_ABCAPI):
             and (code := response.get("code")) is not None
             and (message := response.get("msg")) is not None
         ):
-            raise APIError(code)(message)
+            raise APIError[code](message)
 
         return _parse(response_model, response)
