@@ -4,7 +4,7 @@ from enum import Enum
 from enum import IntEnum as BaseIntEnum
 from typing import Any, Callable, Union, cast, no_type_check
 
-from pydantic.datetime_parse import parse_datetime as parse_datetime
+from pydantic.datetime_parse import parse_datetime
 
 __all__ = ["StrEnum", "IntEnum", "SecurityLevel", "Timestamp", "Time"]
 
