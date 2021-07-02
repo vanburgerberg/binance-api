@@ -27,7 +27,7 @@ class Category(BaseCategory):
             Method.GET,
             "24hr",
             SecurityLevel.NONE,
-            models.Ticker24hrResponse,  # type: ignore
+            models.Ticker24hrResponse,  # type: ignore[arg-type]
             request,
         )
 
@@ -47,7 +47,7 @@ class Category(BaseCategory):
             Method.GET,
             "price",
             SecurityLevel.NONE,
-            models.PriceInfoResponse,  # type: ignore
+            models.PriceInfoResponse,  # type: ignore[arg-type]
             request,
         )
 
@@ -65,6 +65,6 @@ class Category(BaseCategory):
             Method.GET,
             "bookTicker",
             SecurityLevel.NONE,
-            models.BookResponse,  # type: ignore
+            models.BookResponse,  # type: ignore[arg-type]
             request,
         )

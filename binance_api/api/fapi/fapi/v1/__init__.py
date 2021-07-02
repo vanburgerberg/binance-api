@@ -1,6 +1,9 @@
 from typing import Optional, overload
 
 from binance_api.api.fapi.fapi.v1 import models, types
+from binance_api.api.fapi.fapi.v1.position_side import (
+    Category as PositionSideCategory,
+)
 from binance_api.api.fapi.fapi.v1.ticker import Category as TickerCategory
 from binance_api.category import Category as BaseCategory
 from binance_api.http import Method
@@ -15,6 +18,10 @@ class Category(BaseCategory):
     @property
     def ticker(self) -> TickerCategory:
         return TickerCategory(self)
+
+    @property
+    def position_side(self) -> PositionSideCategory:
+        return PositionSideCategory(self)
 
     async def ping(self) -> models.PingResponse:
         return await self.request(
@@ -208,7 +215,7 @@ class Category(BaseCategory):
             Method.GET,
             "premiumIndex",
             SecurityLevel.NONE,
-            models.PremiumIndexResponse,  # type: ignore
+            models.PremiumIndexResponse,  # type: ignore[arg-type]
             request,
         )
 
@@ -273,6 +280,6 @@ class Category(BaseCategory):
             Method.GET,
             "indexInfo",
             SecurityLevel.NONE,
-            models.IndexInfoResponse,  # type: ignore
+            models.IndexInfoResponse,  # type: ignore[arg-type]
             request,
         )

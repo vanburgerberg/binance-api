@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import time
 import urllib
-from typing import Optional, Type
+from typing import Any, Optional, Type, Union
 
 from pydantic import BaseModel, parse_obj_as
 
@@ -11,6 +11,7 @@ from binance_api.api.abc import ResponseModel
 from binance_api.exception import APIError
 from binance_api.http import ABCClient as ABCHTTPClient
 from binance_api.http import AIOHTTPClient as AIOHTTPHTTPClient
+from binance_api.models import APIErrorResponse
 from binance_api.types import SecurityLevel
 
 __all__ = ["API"]
@@ -31,6 +32,19 @@ class API(ABCAPI):
         self._api_key = api_key
         self._secret_key = secret_key
         self._recv_window = recv_window
+
+    @staticmethod
+    def _parse_response(
+        json: Any, model: Type[ResponseModel]
+    ) -> ResponseModel:
+        response: Union[APIErrorResponse, ResponseModel] = parse_obj_as(
+            Union[APIErrorResponse, model], json  # type: ignore[arg-type]
+        )
+
+        if isinstance(response, APIErrorResponse):
+            raise APIError[-response.code](response.message)
+
+        return response
 
     def _get_key_header(self) -> dict[str, str]:
         if self._api_key is None:
@@ -73,15 +87,10 @@ class API(ABCAPI):
 
         query = urllib.parse.urlencode(params)
 
-        response = await self.client.request(
+        json = await self.client.request(
             method, f"{self._url}/{path}?{query}", headers=headers
         )
 
-        if (
-            isinstance(response, dict)
-            and (code := response.get("code")) is not None
-            and (message := response.get("msg")) is not None
-        ):
-            raise APIError[code](message)
+        response = self._parse_response(json, response_model)
 
-        return parse_obj_as(response_model, response)
+        return response

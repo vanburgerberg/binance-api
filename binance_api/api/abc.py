@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 from binance_api.types import SecurityLevel
 
-__all__ = ["API"]
+__all__ = ["API", "ResponseModel"]
 
 
 ResponseModel = TypeVar("ResponseModel")

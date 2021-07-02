@@ -133,3 +133,5 @@ dmypy.json
 
 # Poetry
 poetry.lock
+
+tests/_test.py
