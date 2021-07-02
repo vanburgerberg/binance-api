@@ -1,5 +1,7 @@
-from binance_api.api.base import API as _BaseAPI
+from binance_api.api.base import API as BaseAPI
+
+__all__ = ["API"]
 
 
-class API(_BaseAPI):
-    _url = "https://api.binance.com/api"
+class API(BaseAPI):
+    _url = "https://api.binance.com"

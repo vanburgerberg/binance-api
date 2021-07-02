@@ -1,15 +1,17 @@
-from binance_api.api.base import API as _BaseAPI
-from binance_api.api.fapi.fapi import Category as _FapiCategory
-from binance_api.api.fapi.futures import Category as _FuturesCategory
+from binance_api.api.base import API as BaseAPI
+from binance_api.api.fapi.fapi import Category as FapiCategory
+from binance_api.api.fapi.futures import Category as FuturesCategory
+
+__all__ = ["API"]
 
 
-class API(_BaseAPI):
+class API(BaseAPI):
     _url = "https://fapi.binance.com"
 
     @property
-    def fapi(self) -> _FapiCategory:
-        return _FapiCategory(self)
+    def fapi(self) -> FapiCategory:
+        return FapiCategory(self)
 
     @property
-    def futures(self) -> _FuturesCategory:
-        return _FuturesCategory(self)
+    def futures(self) -> FuturesCategory:
+        return FuturesCategory(self)

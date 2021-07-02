@@ -1,75 +1,126 @@
-from datetime import datetime as _datetime
-from typing import NamedTuple as _NamedTuple
-from typing import Optional as _Optional
-from typing import Union as _Union
+from datetime import datetime
+from typing import NamedTuple, Optional, Union
 
-from pydantic import BaseModel as _BaseModel
-from pydantic import Field as _Field
-from pydantic import NonNegativeFloat as _NonNegativeFloat
-from pydantic import NonNegativeInt as _NonNegativeInt
-from pydantic import PositiveFloat as _PositiveFloat
-from pydantic import PositiveInt as _PositiveInt
+from pydantic import (
+    BaseModel,
+    Field,
+    NonNegativeFloat,
+    NonNegativeInt,
+    PositiveFloat,
+    PositiveInt,
+)
 
-import binance_api.api.fapi.fapi.v1.types as _types
-from binance_api.types import Timestamp as _Timestamp
+from binance_api.api.fapi.fapi.v1 import types
+from binance_api.types import Timestamp
+
+__all__ = [
+    "PingResponse",
+    "TimeResponse",
+    "ExchangeFilter",
+    "RateLimitInfo",
+    "AssetInfo",
+    "PriceFilter",
+    "LotSizeFilter",
+    "OrderCountFilter",
+    "MinNotionalFilter",
+    "PercentPriceFilter",
+    "Filter",
+    "SymbolInfo",
+    "ExchangeInfoResponse",
+    "Proposal",
+    "DepthResponse",
+    "DepthRequest",
+    "Trade",
+    "TradesResponse",
+    "TradesRequest",
+    "HistoricalTradesRequest",
+    "AggregateTradeInfo",
+    "AggregateTradesResponse",
+    "AggregateTradesRequest",
+    "Bar",
+    "KlinesResponse",
+    "KlinesRequest",
+    "ContinuousKlinesRequest",
+    "PriceBar",
+    "PriceKlinesResponse",
+    "IndexPriceKlinesRequest",
+    "PremiumIndex",
+    "PremiumIndexNoSymbol",
+    "PremiumIndexNoSymbolResponse",
+    "PremiumIndexResponse",
+    "PremiumIndexRequest",
+    "FundingRate",
+    "FundingRateResponse",
+    "FundingRateRequest",
+    "OpenInterestResponse",
+    "OpenInterestRequest",
+    "LvtBar",
+    "LvtKlinesResponse",
+    "LvtKlinesRequest",
+    "IndexAssetInfo",
+    "IndexInfo",
+    "IndexInfoNoSymbolResponse",
+    "IndexInfoResponse",
+    "IndexInfoRequest",
+]
 
 
-class PingResponse(_BaseModel):
+class PingResponse(BaseModel):
     pass
 
 
-class TimeResponse(_BaseModel):
-    server_time: _datetime = _Field(alias="serverTime")
+class TimeResponse(BaseModel):
+    server_time: datetime = Field(alias="serverTime")
 
 
-class ExchangeFilter(_BaseModel):
+class ExchangeFilter(BaseModel):
     pass
 
 
-class RateLimitInfo(_BaseModel):
-    interval: _types.RateLimitInterval
-    interval_count: _PositiveInt = _Field(alias="intervalNum")
-    limit: _PositiveInt
-    type: _types.RateLimitType = _Field(alias="rateLimitType")
+class RateLimitInfo(BaseModel):
+    interval: types.RateLimitInterval
+    interval_count: PositiveInt = Field(alias="intervalNum")
+    limit: PositiveInt
+    type: types.RateLimitType = Field(alias="rateLimitType")
 
 
-class AssetInfo(_BaseModel):
+class AssetInfo(BaseModel):
     asset: str
-    margin_avaliable: bool = _Field(alias="marginAvailable")
-    auto_asset_exchange: float = _Field(None, alias="autoAssetExchange")
+    margin_avaliable: bool = Field(alias="marginAvailable")
+    auto_asset_exchange: float = Field(None, alias="autoAssetExchange")
 
 
-class _BaseFilter(_BaseModel):
-    type: _types.FilterType = _Field(alias="filterType")
+class BaseFilter(BaseModel):
+    type: types.FilterType = Field(alias="filterType")
 
 
-class PriceFilter(_BaseFilter):
-    max_price: _PositiveFloat = _Field(alias="maxPrice")
-    min_price: _PositiveFloat = _Field(alias="minPrice")
-    tick_size: _PositiveFloat = _Field(alias="tickSize")
+class PriceFilter(BaseFilter):
+    max_price: PositiveFloat = Field(alias="maxPrice")
+    min_price: PositiveFloat = Field(alias="minPrice")
+    tick_size: PositiveFloat = Field(alias="tickSize")
 
 
-class LotSizeFilter(_BaseFilter):
-    max_qty: _PositiveFloat = _Field(alias="maxQty")
-    min_qty: _PositiveFloat = _Field(alias="minQty")
-    step_size: _PositiveFloat = _Field(alias="stepSize")
+class LotSizeFilter(BaseFilter):
+    max_qty: PositiveFloat = Field(alias="maxQty")
+    min_qty: PositiveFloat = Field(alias="minQty")
+    step_size: PositiveFloat = Field(alias="stepSize")
 
 
-class OrderCountFilter(_BaseFilter):
-    limit: _PositiveInt
+class OrderCountFilter(BaseFilter):
+    limit: PositiveInt
 
 
-class MinNotionalFilter(_BaseFilter):
-    notional: _PositiveFloat
+class MinNotionalFilter(BaseFilter):
+    notional: PositiveFloat
 
 
-class PercentPriceFilter(_BaseFilter):
-    multiplier_up: _PositiveFloat = _Field(alias="multiplierUp")
-    multiplier_down: _PositiveFloat = _Field(alias="multiplierDown")
-    multiplier_precision: _PositiveInt = _Field(alias="multiplierDecimal")
+class PercentPriceFilter(BaseFilter):
+    multiplier_up: PositiveFloat = Field(alias="multiplierUp")
+    multiplier_down: PositiveFloat = Field(alias="multiplierDown")
+    multiplier_precision: PositiveInt = Field(alias="multiplierDecimal")
 
 
-Filter = _Union[
+Filter = Union[
     PriceFilter,
     LotSizeFilter,
     OrderCountFilter,
@@ -78,261 +129,257 @@ Filter = _Union[
 ]
 
 
-class SymbolInfo(_BaseModel):
+class SymbolInfo(BaseModel):
     symbol: str
     pair: str
-    contract_type: _types.ContractType = _Field(alias="contractType")
-    delivery_date: _datetime = _Field(alias="deliveryDate")
-    onboard_date: _datetime = _Field(alias="onboardDate")
-    status: _types.ContractStatus
-    maint_margin_percent: _PositiveFloat = _Field(alias="maintMarginPercent")
-    required_margin_percent: _PositiveFloat = _Field(
+    contract_type: types.ContractType = Field(alias="contractType")
+    delivery_date: datetime = Field(alias="deliveryDate")
+    onboard_date: datetime = Field(alias="onboardDate")
+    status: types.ContractStatus
+    maint_margin_percent: PositiveFloat = Field(alias="maintMarginPercent")
+    required_margin_percent: PositiveFloat = Field(
         alias="requiredMarginPercent"
     )
-    base_asset: str = _Field(alias="baseAsset")
-    quote_asset: str = _Field(alias="quoteAsset")
-    margin_asset: str = _Field(alias="marginAsset")
-    price_precision: _NonNegativeInt = _Field(alias="pricePrecision")
-    quantity_precision: _NonNegativeInt = _Field(alias="quantityPrecision")
-    base_asset_precision: _NonNegativeInt = _Field(alias="baseAssetPrecision")
-    quote_asset_precision: _NonNegativeInt = _Field(alias="quotePrecision")
-    underlying_type: _types.UnderlyingType = _Field(alias="underlyingType")
-    underlying_sub_types: list[_types.UnderlyingSubType] = _Field(
+    base_asset: str = Field(alias="baseAsset")
+    quote_asset: str = Field(alias="quoteAsset")
+    margin_asset: str = Field(alias="marginAsset")
+    price_precision: NonNegativeInt = Field(alias="pricePrecision")
+    quantity_precision: NonNegativeInt = Field(alias="quantityPrecision")
+    base_asset_precision: NonNegativeInt = Field(alias="baseAssetPrecision")
+    quote_asset_precision: NonNegativeInt = Field(alias="quotePrecision")
+    underlying_type: types.UnderlyingType = Field(alias="underlyingType")
+    underlying_subtypes: list[types.UnderlyingSubType] = Field(
         alias="underlyingSubType"
     )
-    settle_plan: int = _Field(alias="settlePlan")
-    trigger_protect: _PositiveFloat = _Field(alias="triggerProtect")
+    settle_plan: int = Field(alias="settlePlan")
+    trigger_protect: PositiveFloat = Field(alias="triggerProtect")
     filters: list[Filter]
-    allowed_order_types: list[_types.OrderType] = _Field(alias="orderTypes")
-    allowed_time_in_force: list[_types.TimeInForce] = _Field(
-        alias="timeInForce"
-    )
+    allowed_ordertypes: list[types.OrderType] = Field(alias="orderTypes")
+    allowed_time_in_force: list[types.TimeInForce] = Field(alias="timeInForce")
 
 
-class ExchangeInfoResponse(_BaseModel):
-    server_time: _datetime = _Field(alias="serverTime")
-    exchange_filters: list[ExchangeFilter] = _Field(alias="exchangeFilters")
-    rate_limits: list[RateLimitInfo] = _Field(alias="rateLimits")
+class ExchangeInfoResponse(BaseModel):
+    server_time: datetime = Field(alias="serverTime")
+    exchange_filters: list[ExchangeFilter] = Field(alias="exchangeFilters")
+    rate_limits: list[RateLimitInfo] = Field(alias="rateLimits")
     assets: list[AssetInfo]
     symbols: list[SymbolInfo]
-    timezone: _types.Timezone
+    timezone: types.Timezone
 
 
-class Proposal(_NamedTuple):
-    price: _PositiveFloat
-    quantity: _PositiveFloat
+class Proposal(NamedTuple):
+    price: PositiveFloat
+    quantity: PositiveFloat
 
 
-class DepthResponse(_BaseModel):
-    last_update_id: _PositiveInt = _Field(alias="lastUpdateId")
-    message_output_time: _datetime = _Field(alias="E")
-    transaction_time: _datetime = _Field(alias="T")
+class DepthResponse(BaseModel):
+    last_update_id: PositiveInt = Field(alias="lastUpdateId")
+    message_output_time: datetime = Field(alias="E")
+    transaction_time: datetime = Field(alias="T")
     bids: list[Proposal]
     asks: list[Proposal]
 
 
-class DepthRequest(_BaseModel):
+class DepthRequest(BaseModel):
     symbol: str
-    limit: _Optional[_types.DepthLimit]
+    limit: Optional[types.DepthLimit]
 
 
-class Trade(_BaseModel):
-    id: _PositiveInt
-    price: _PositiveFloat
-    quantity: _PositiveFloat = _Field(alias="qty")
-    quote_qty: _PositiveFloat = _Field(alias="quoteQty")
-    time: _datetime
-    is_buyer_maker: bool = _Field(alias="isBuyerMaker")
+class Trade(BaseModel):
+    id: PositiveInt
+    price: PositiveFloat
+    quantity: PositiveFloat = Field(alias="qty")
+    quote_qty: PositiveFloat = Field(alias="quoteQty")
+    time: datetime
+    is_buyer_maker: bool = Field(alias="isBuyerMaker")
 
 
 TradesResponse = list[Trade]
 
 
-class TradesRequest(_BaseModel):
+class TradesRequest(BaseModel):
     symbol: str
-    limit: _Optional[int] = _Field(ge=1, le=1000)
+    limit: Optional[int] = Field(ge=1, le=1000)
 
 
 class HistoricalTradesRequest(TradesRequest):
-    fromId: _Optional[_PositiveInt] = _Field(alias="from_id")
+    fromId: Optional[PositiveInt] = Field(alias="from_id")
 
 
-class AggregateTradeInfo(_BaseModel):
-    trade_id: _PositiveInt = _Field(alias="a")
-    price: _PositiveFloat = _Field(alias="p")
-    quantity: _PositiveFloat = _Field(alias="q")
-    first_trade_id: _PositiveInt = _Field(alias="f")
-    last_trade_id: _PositiveInt = _Field(alias="l")
-    time: _datetime = _Field(alias="T")
-    is_buyer_maker: bool = _Field(alias="m")
+class AggregateTradeInfo(BaseModel):
+    trade_id: PositiveInt = Field(alias="a")
+    price: PositiveFloat = Field(alias="p")
+    quantity: PositiveFloat = Field(alias="q")
+    first_trade_id: PositiveInt = Field(alias="f")
+    last_trade_id: PositiveInt = Field(alias="l")
+    time: datetime = Field(alias="T")
+    is_buyer_maker: bool = Field(alias="m")
 
 
 AggregateTradesResponse = list[AggregateTradeInfo]
 
 
-class AggregateTradesRequest(_BaseModel):
+class AggregateTradesRequest(BaseModel):
     symbol: str
-    fromId: _Optional[_PositiveInt] = _Field(alias="from_id")
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
-    limit: _Optional[int] = _Field(ge=1, le=1000)
+    fromId: Optional[PositiveInt] = Field(alias="from_id")
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
+    limit: Optional[int] = Field(ge=1, le=1000)
 
 
-class Bar(_NamedTuple):
-    open_time: _datetime
-    open: _PositiveFloat
-    high: _PositiveFloat
-    low: _PositiveFloat
-    close: _PositiveFloat
-    volume: _PositiveFloat
-    close_time: _datetime
-    quote_volume: _PositiveFloat
-    trade_count: _PositiveInt
-    taker_buy_volume: _PositiveFloat
-    taker_buy_quote_volume: _PositiveFloat
-    ignore: _NonNegativeFloat
+class Bar(NamedTuple):
+    open_time: datetime
+    open: PositiveFloat
+    high: PositiveFloat
+    low: PositiveFloat
+    close: PositiveFloat
+    volume: PositiveFloat
+    close_time: datetime
+    quote_volume: PositiveFloat
+    trade_count: PositiveInt
+    taker_buy_volume: PositiveFloat
+    taker_buy_quote_volume: PositiveFloat
+    ignore: NonNegativeFloat
 
 
 KlinesResponse = list[Bar]
 
 
-class KlinesRequest(_BaseModel):
+class KlinesRequest(BaseModel):
     symbol: str
-    interval: _types.KlineInterval
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
-    limit: _Optional[int] = _Field(ge=1, le=1500)
+    interval: types.KlineInterval
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
+    limit: Optional[int] = Field(ge=1, le=1500)
 
 
-class ContinuousKlinesRequest(_BaseModel):
+class ContinuousKlinesRequest(BaseModel):
     pair: str
-    contractType: _types.ContractType = _Field(alias="contract_type")
-    interval: _types.KlineInterval
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
-    limit: _Optional[int] = _Field(ge=1, le=1500)
+    contractType: types.ContractType = Field(alias="contract_type")
+    interval: types.KlineInterval
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
+    limit: Optional[int] = Field(ge=1, le=1500)
 
 
-class PriceBar(_NamedTuple):
-    open_time: _datetime
-    open: _PositiveFloat
-    high: _PositiveFloat
-    low: _PositiveFloat
-    close: _PositiveFloat
-    ignore: _NonNegativeFloat
-    close_time: _datetime
-    ignore_2: _NonNegativeFloat
-    data_count: _PositiveInt
-    ignore_3: _NonNegativeFloat
-    ignore_4: _NonNegativeFloat
-    ignore_5: _NonNegativeFloat
+class PriceBar(NamedTuple):
+    open_time: datetime
+    open: PositiveFloat
+    high: PositiveFloat
+    low: PositiveFloat
+    close: PositiveFloat
+    ignore: NonNegativeFloat
+    close_time: datetime
+    ignore_2: NonNegativeFloat
+    data_count: PositiveInt
+    ignore_3: NonNegativeFloat
+    ignore_4: NonNegativeFloat
+    ignore_5: NonNegativeFloat
 
 
 PriceKlinesResponse = list[PriceBar]
 
 
-class IndexPriceKlinesRequest(_BaseModel):
+class IndexPriceKlinesRequest(BaseModel):
     pair: str
-    interval: _types.KlineInterval
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
-    limit: _Optional[int] = _Field(ge=1, le=1500)
+    interval: types.KlineInterval
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
+    limit: Optional[int] = Field(ge=1, le=1500)
 
 
-class PremiumIndex(_BaseModel):
+class PremiumIndex(BaseModel):
     symbol: str
-    mark_price: _PositiveFloat = _Field(alias="markPrice")
-    index_price: _PositiveFloat = _Field(alias="indexPrice")
-    last_funding_rate: float = _Field(alias="lastFundingRate")
-    next_funding_time: _datetime = _Field(alias="nextFundingTime")
-    interest_rate: float = _Field(alias="interestRate")
-    time: _datetime
+    mark_price: PositiveFloat = Field(alias="markPrice")
+    index_price: PositiveFloat = Field(alias="indexPrice")
+    last_funding_rate: float = Field(alias="lastFundingRate")
+    next_funding_time: datetime = Field(alias="nextFundingTime")
+    interest_rate: float = Field(alias="interestRate")
+    time: datetime
 
 
 class PremiumIndexNoSymbol(PremiumIndex):
-    estimated_settle_price: _PositiveFloat = _Field(
-        alias="estimatedSettlePrice"
-    )
+    estimated_settle_price: PositiveFloat = Field(alias="estimatedSettlePrice")
 
 
 PremiumIndexNoSymbolResponse = list[PremiumIndexNoSymbol]
 
 
-PremiumIndexResponse = _Union[PremiumIndex, PremiumIndexNoSymbolResponse]
+PremiumIndexResponse = Union[PremiumIndex, PremiumIndexNoSymbolResponse]
 
 
-class PremiumIndexRequest(_BaseModel):
-    symbol: _Optional[str]
+class PremiumIndexRequest(BaseModel):
+    symbol: Optional[str]
 
 
-class FundingRate(_BaseModel):
+class FundingRate(BaseModel):
     symbol: str
-    funding_rate: float = _Field(alias="fundingRate")
-    funding_time: _datetime = _Field(alias="fundingTime")
+    funding_rate: float = Field(alias="fundingRate")
+    funding_time: datetime = Field(alias="fundingTime")
 
 
 FundingRateResponse = list[FundingRate]
 
 
-class FundingRateRequest(_BaseModel):
-    symbol: _Optional[str]
+class FundingRateRequest(BaseModel):
+    symbol: Optional[str]
 
 
-class OpenInterestResponse(_BaseModel):
-    open_interest: float = _Field(alias="openInterest")
+class OpenInterestResponse(BaseModel):
+    open_interest: float = Field(alias="openInterest")
     symbol: str
-    time: _datetime
+    time: datetime
 
 
-class OpenInterestRequest(_BaseModel):
+class OpenInterestRequest(BaseModel):
     symbol: str
 
 
-class LvtBar(_NamedTuple):
-    open_time: _datetime
-    open: _PositiveFloat
-    high: _PositiveFloat
-    low: _PositiveFloat
-    close: _PositiveFloat
-    leverage: _PositiveFloat
-    close_time: _datetime
-    ignore: _NonNegativeFloat
-    update_count: _PositiveInt
-    ignore_2: _NonNegativeFloat
-    ignore_3: _NonNegativeFloat
-    ignore_4: _NonNegativeFloat
+class LvtBar(NamedTuple):
+    open_time: datetime
+    open: PositiveFloat
+    high: PositiveFloat
+    low: PositiveFloat
+    close: PositiveFloat
+    leverage: PositiveFloat
+    close_time: datetime
+    ignore: NonNegativeFloat
+    update_count: PositiveInt
+    ignore_2: NonNegativeFloat
+    ignore_3: NonNegativeFloat
+    ignore_4: NonNegativeFloat
 
 
 LvtKlinesResponse = list[LvtBar]
 
 
-class LvtKlinesRequest(_BaseModel):
+class LvtKlinesRequest(BaseModel):
     symbol: str
-    interval: _types.KlineInterval
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
-    limit: _Optional[int] = _Field(ge=1, le=1000)
+    interval: types.KlineInterval
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
+    limit: Optional[int] = Field(ge=1, le=1000)
 
 
-class IndexAssetInfo(_BaseModel):
-    base_asset: str = _Field(alias="baseAsset")
-    quote_asset: str = _Field(alias="quoteAsset")
-    quantity_weight: _PositiveFloat = _Field(alias="weightInQuantity")
-    percentage_weight: _PositiveFloat = _Field(alias="weightInPercentage")
+class IndexAssetInfo(BaseModel):
+    base_asset: str = Field(alias="baseAsset")
+    quote_asset: str = Field(alias="quoteAsset")
+    quantity_weight: PositiveFloat = Field(alias="weightInQuantity")
+    percentage_weight: PositiveFloat = Field(alias="weightInPercentage")
 
 
-class IndexInfo(_BaseModel):
+class IndexInfo(BaseModel):
     symbol: str
-    time: _datetime
+    time: datetime
     component: str
-    base_assets: list[IndexAssetInfo] = _Field(alias="baseAssetList")
+    base_assets: list[IndexAssetInfo] = Field(alias="baseAssetList")
 
 
 IndexInfoNoSymbolResponse = list[IndexInfo]
 
 
-IndexInfoResponse = _Union[IndexInfo, IndexInfoNoSymbolResponse]
+IndexInfoResponse = Union[IndexInfo, IndexInfoNoSymbolResponse]
 
 
-class IndexInfoRequest(_BaseModel):
-    symbol: _Optional[str]
+class IndexInfoRequest(BaseModel):
+    symbol: Optional[str]

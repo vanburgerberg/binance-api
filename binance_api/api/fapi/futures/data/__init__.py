@@ -1,24 +1,25 @@
-from typing import Optional as _Optional
+from typing import Optional
 
-import binance_api.api.fapi.futures.data.models as _models
-from binance_api.category import Category as _BaseCategory
-from binance_api.http import Method as _Method
-from binance_api.types import SecurityLevel as _SecurityLevel
-from binance_api.types import Time as _Time
+from binance_api.api.fapi.futures.data import models
+from binance_api.category import Category as BaseCategory
+from binance_api.http import Method
+from binance_api.types import SecurityLevel, Time
+
+__all__ = ["Category"]
 
 
-class Category(_BaseCategory):
+class Category(BaseCategory):
     _path = "data"
 
     async def open_interest_hist(
         self,
         symbol: str,
         period: str,
-        limit: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-    ) -> _models.OpenInterestHistResponse:
-        request = _models.Request(
+        limit: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+    ) -> models.OpenInterestHistResponse:
+        request = models.Request(
             symbol=symbol,
             period=period,
             limit=limit,
@@ -26,10 +27,10 @@ class Category(_BaseCategory):
             end_time=end_time,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "openInterestHist",
-            _SecurityLevel.NONE,
-            _models.OpenInterestHistResponse,
+            SecurityLevel.NONE,
+            models.OpenInterestHistResponse,
             request,
         )
 
@@ -37,11 +38,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         period: str,
-        limit: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-    ) -> _models.LongShortRatioResponse:
-        request = _models.Request(
+        limit: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+    ) -> models.LongShortRatioResponse:
+        request = models.Request(
             symbol=symbol,
             period=period,
             limit=limit,
@@ -49,10 +50,10 @@ class Category(_BaseCategory):
             end_time=end_time,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "topLongShortAccountRatio",
-            _SecurityLevel.KEY,
-            _models.LongShortRatioResponse,
+            SecurityLevel.KEY,
+            models.LongShortRatioResponse,
             request,
         )
 
@@ -60,11 +61,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         period: str,
-        limit: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-    ) -> _models.LongShortRatioResponse:
-        request = _models.Request(
+        limit: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+    ) -> models.LongShortRatioResponse:
+        request = models.Request(
             symbol=symbol,
             period=period,
             limit=limit,
@@ -72,10 +73,10 @@ class Category(_BaseCategory):
             end_time=end_time,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "topLongShortPositionRatio",
-            _SecurityLevel.KEY,
-            _models.LongShortRatioResponse,
+            SecurityLevel.KEY,
+            models.LongShortRatioResponse,
             request,
         )
 
@@ -83,11 +84,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         period: str,
-        limit: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-    ) -> _models.LongShortRatioResponse:
-        request = _models.Request(
+        limit: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+    ) -> models.LongShortRatioResponse:
+        request = models.Request(
             symbol=symbol,
             period=period,
             limit=limit,
@@ -95,10 +96,10 @@ class Category(_BaseCategory):
             end_time=end_time,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "globalLongShortAccountRatio",
-            _SecurityLevel.NONE,
-            _models.LongShortRatioResponse,
+            SecurityLevel.NONE,
+            models.LongShortRatioResponse,
             request,
         )
 
@@ -106,11 +107,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         period: str,
-        limit: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-    ) -> _models.TakerLongShortRatioResponse:
-        request = _models.Request(
+        limit: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+    ) -> models.TakerLongShortRatioResponse:
+        request = models.Request(
             symbol=symbol,
             period=period,
             limit=limit,
@@ -118,9 +119,9 @@ class Category(_BaseCategory):
             end_time=end_time,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "takerlongshortRatio",
-            _SecurityLevel.NONE,
-            _models.TakerLongShortRatioResponse,
+            SecurityLevel.NONE,
+            models.TakerLongShortRatioResponse,
             request,
         )

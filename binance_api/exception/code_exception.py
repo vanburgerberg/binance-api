@@ -1,8 +1,9 @@
-from typing import Type as _Type
-from typing import TypeVar as _TypeVar
-from typing import cast as _cast
+from typing import Type, TypeVar, cast
 
-T = _TypeVar("T", bound=_Type["CodeException"])
+__all__ = ["CodeException"]
+
+
+T = TypeVar("T", bound=Type["CodeException"])
 
 
 class CodeExceptionMeta(type):
@@ -12,10 +13,10 @@ class CodeExceptionMeta(type):
 
         exception = cls.__exceptions__.get(code)
         if exception is not None:
-            return _cast(T, exception)
+            return cast(T, exception)
 
         name = f"{cls.__name__}_{code}"
-        new_exception = _cast(T, type(name, (cls,), {}))
+        new_exception = cast(T, type(name, (cls,), {}))
         new_exception.__code_specified__ = True
         cls.__exceptions__[code] = new_exception
 
@@ -24,5 +25,5 @@ class CodeExceptionMeta(type):
 
 class CodeException(Exception, metaclass=CodeExceptionMeta):
     code: int
-    __exceptions__: dict[int, _Type["CodeException"]] = {}
+    __exceptions__: dict[int, Type["CodeException"]] = {}
     __code_specified__ = False

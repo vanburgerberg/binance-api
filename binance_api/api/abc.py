@@ -1,24 +1,24 @@
-from abc import ABC as _ABC
-from abc import abstractmethod as _abstractmethod
-from typing import Optional as _Optional
-from typing import Type as _Type
-from typing import TypeVar as _TypeVar
+from abc import ABC, abstractmethod
+from typing import Optional, Type, TypeVar
 
-from pydantic import BaseModel as _BaseModel
+from pydantic import BaseModel
 
-from binance_api.types import SecurityLevel as _SecurityLevel
+from binance_api.types import SecurityLevel
 
-ResponseModel = _TypeVar("ResponseModel")
+__all__ = ["API"]
 
 
-class API(_ABC):
-    @_abstractmethod
+ResponseModel = TypeVar("ResponseModel")
+
+
+class API(ABC):
+    @abstractmethod
     async def request(
         self,
         method: str,
         path: str,
-        security_level: _SecurityLevel,
-        response_model: _Type[ResponseModel],
-        request: _Optional[_BaseModel] = None,
+        security_level: SecurityLevel,
+        response_model: Type[ResponseModel],
+        request: Optional[BaseModel] = None,
     ) -> ResponseModel:
         pass

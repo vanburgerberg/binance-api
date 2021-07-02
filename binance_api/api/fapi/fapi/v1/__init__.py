@@ -1,90 +1,89 @@
-from typing import Optional as _Optional
-from typing import overload as _overload
+from typing import Optional, overload
 
-import binance_api.api.fapi.fapi.v1.models as _models
-import binance_api.api.fapi.fapi.v1.types as _types
-from binance_api.api.fapi.fapi.v1.ticker import Category as _TickerCategory
-from binance_api.category import Category as _BaseCategory
-from binance_api.http import Method as _Method
-from binance_api.types import SecurityLevel as _SecurityLevel
-from binance_api.types import Time as _Time
+from binance_api.api.fapi.fapi.v1 import models, types
+from binance_api.api.fapi.fapi.v1.ticker import Category as TickerCategory
+from binance_api.category import Category as BaseCategory
+from binance_api.http import Method
+from binance_api.types import SecurityLevel, Time
+
+__all__ = ["Category"]
 
 
-class Category(_BaseCategory):
+class Category(BaseCategory):
     _path = "v1"
 
     @property
-    def ticker(self) -> _TickerCategory:
-        return _TickerCategory(self)
+    def ticker(self) -> TickerCategory:
+        return TickerCategory(self)
 
-    async def ping(self) -> _models.PingResponse:
+    async def ping(self) -> models.PingResponse:
         return await self.request(
-            _Method.GET, "ping", _SecurityLevel.NONE, _models.PingResponse
+            Method.GET, "ping", SecurityLevel.NONE, models.PingResponse
         )
 
-    async def time(self) -> _models.TimeResponse:
+    async def time(self) -> models.TimeResponse:
         return await self.request(
-            _Method.GET, "time", _SecurityLevel.NONE, _models.TimeResponse
+            Method.GET, "time", SecurityLevel.NONE, models.TimeResponse
         )
 
-    async def exchange_info(self) -> _models.ExchangeInfoResponse:
+    async def exchange_info(self) -> models.ExchangeInfoResponse:
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "exchangeInfo",
-            _SecurityLevel.NONE,
-            _models.ExchangeInfoResponse,
+            SecurityLevel.NONE,
+            models.ExchangeInfoResponse,
         )
 
     async def depth(
-        self, symbol: str, limit: _Optional[_types.DepthLimit] = None
-    ) -> _models.DepthResponse:
-        request = _models.DepthRequest(symbol=symbol, limit=limit)
+        self, symbol: str, limit: Optional[types.DepthLimit] = None
+    ) -> models.DepthResponse:
+        request = models.DepthRequest(symbol=symbol, limit=limit)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "depth",
-            _SecurityLevel.NONE,
-            _models.DepthResponse,
+            SecurityLevel.NONE,
+            models.DepthResponse,
             request,
         )
 
     async def trades(
-        self, symbol: str, limit: _Optional[int] = None
-    ) -> _models.TradesResponse:
-        request = _models.TradesRequest(symbol=symbol, limit=limit)
+        self, symbol: str, limit: Optional[int] = None
+    ) -> models.TradesResponse:
+        request = models.TradesRequest(symbol=symbol, limit=limit)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "trades",
-            _SecurityLevel.NONE,
-            _models.TradesResponse,
+            SecurityLevel.NONE,
+            models.TradesResponse,
             request,
         )
 
     async def historical_trades(
         self,
         symbol: str,
-        limit: _Optional[int] = None,
-        from_id: _Optional[int] = None,
-    ) -> _models.TradesResponse:
-        request = _models.HistoricalTradesRequest(
+        limit: Optional[int] = None,
+        from_id: Optional[int] = None,
+    ) -> models.TradesResponse:
+        request = models.HistoricalTradesRequest(
             symbol=symbol, limit=limit, from_id=from_id
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "historicalTrades",
-            _SecurityLevel.KEY,
-            _models.TradesResponse,
+            SecurityLevel.KEY,
+            models.TradesResponse,
             request,
         )
 
     async def aggregate_trades(
         self,
         symbol: str,
-        from_id: _Optional[int] = None,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.AggregateTradesResponse:
-        request = _models.AggregateTradesRequest(
+        from_id: Optional[int] = None,
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.AggregateTradesResponse:
+        request = models.AggregateTradesRequest(
             symbol=symbol,
             from_id=from_id,
             start_time=start_time,
@@ -92,10 +91,10 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "aggTrades",
-            _SecurityLevel.NONE,
-            _models.AggregateTradesResponse,
+            SecurityLevel.NONE,
+            models.AggregateTradesResponse,
             request,
         )
 
@@ -103,11 +102,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         interval: str,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.KlinesResponse:
-        request = _models.KlinesRequest(
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.KlinesResponse:
+        request = models.KlinesRequest(
             symbol=symbol,
             interval=interval,
             start_time=start_time,
@@ -115,10 +114,10 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "klines",
-            _SecurityLevel.NONE,
-            _models.KlinesResponse,
+            SecurityLevel.NONE,
+            models.KlinesResponse,
             request,
         )
 
@@ -127,11 +126,11 @@ class Category(_BaseCategory):
         pair: str,
         contract_type: str,
         interval: str,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.KlinesResponse:
-        request = _models.ContinuousKlinesRequest(
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.KlinesResponse:
+        request = models.ContinuousKlinesRequest(
             pair=pair,
             contract_type=contract_type,
             interval=interval,
@@ -140,10 +139,10 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "continuousKlines",
-            _SecurityLevel.NONE,
-            _models.KlinesResponse,
+            SecurityLevel.NONE,
+            models.KlinesResponse,
             request,
         )
 
@@ -151,11 +150,11 @@ class Category(_BaseCategory):
         self,
         pair: str,
         interval: str,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.PriceKlinesResponse:
-        request = _models.IndexPriceKlinesRequest(
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.PriceKlinesResponse:
+        request = models.IndexPriceKlinesRequest(
             pair=pair,
             interval=interval,
             start_time=start_time,
@@ -163,10 +162,10 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "indexPriceKlines",
-            _SecurityLevel.NONE,
-            _models.PriceKlinesResponse,
+            SecurityLevel.NONE,
+            models.PriceKlinesResponse,
             request,
         )
 
@@ -174,11 +173,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         interval: str,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.PriceKlinesResponse:
-        request = _models.KlinesRequest(
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.PriceKlinesResponse:
+        request = models.KlinesRequest(
             symbol=symbol,
             interval=interval,
             start_time=start_time,
@@ -186,52 +185,52 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "markPriceKlines",
-            _SecurityLevel.NONE,
-            _models.PriceKlinesResponse,
+            SecurityLevel.NONE,
+            models.PriceKlinesResponse,
             request,
         )
 
-    @_overload
-    async def premium_index(self) -> _models.PremiumIndexNoSymbolResponse:
+    @overload
+    async def premium_index(self) -> models.PremiumIndexNoSymbolResponse:
         ...
 
-    @_overload
-    async def premium_index(self, symbol: str) -> _models.PremiumIndex:
+    @overload
+    async def premium_index(self, symbol: str) -> models.PremiumIndex:
         ...
 
     async def premium_index(
-        self, symbol: _Optional[str] = None
-    ) -> _models.PremiumIndexResponse:
-        request = _models.PremiumIndexRequest(symbol=symbol)
+        self, symbol: Optional[str] = None
+    ) -> models.PremiumIndexResponse:
+        request = models.PremiumIndexRequest(symbol=symbol)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "premiumIndex",
-            _SecurityLevel.NONE,
-            _models.PremiumIndexResponse,  # type: ignore
+            SecurityLevel.NONE,
+            models.PremiumIndexResponse,  # type: ignore
             request,
         )
 
     async def funding_rate(
-        self, symbol: _Optional[str] = None
-    ) -> _models.FundingRateResponse:
-        request = _models.FundingRateRequest(symbol=symbol)
+        self, symbol: Optional[str] = None
+    ) -> models.FundingRateResponse:
+        request = models.FundingRateRequest(symbol=symbol)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "fundingRate",
-            _SecurityLevel.NONE,
-            _models.FundingRateResponse,
+            SecurityLevel.NONE,
+            models.FundingRateResponse,
             request,
         )
 
-    async def open_interest(self, symbol: str) -> _models.OpenInterestResponse:
-        request = _models.OpenInterestRequest(symbol=symbol)
+    async def open_interest(self, symbol: str) -> models.OpenInterestResponse:
+        request = models.OpenInterestRequest(symbol=symbol)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "openInterest",
-            _SecurityLevel.NONE,
-            _models.OpenInterestResponse,
+            SecurityLevel.NONE,
+            models.OpenInterestResponse,
             request,
         )
 
@@ -239,11 +238,11 @@ class Category(_BaseCategory):
         self,
         symbol: str,
         interval: str,
-        start_time: _Optional[_Time] = None,
-        end_time: _Optional[_Time] = None,
-        limit: _Optional[int] = None,
-    ) -> _models.LvtKlinesResponse:
-        request = _models.LvtKlinesRequest(
+        start_time: Optional[Time] = None,
+        end_time: Optional[Time] = None,
+        limit: Optional[int] = None,
+    ) -> models.LvtKlinesResponse:
+        request = models.LvtKlinesRequest(
             symbol=symbol,
             interval=interval,
             start_time=start_time,
@@ -251,29 +250,29 @@ class Category(_BaseCategory):
             limit=limit,
         )
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "lvtKlines",
-            _SecurityLevel.NONE,
-            _models.LvtKlinesResponse,
+            SecurityLevel.NONE,
+            models.LvtKlinesResponse,
             request,
         )
 
-    @_overload
-    async def index_info(self) -> _models.IndexInfoNoSymbolResponse:
+    @overload
+    async def index_info(self) -> models.IndexInfoNoSymbolResponse:
         ...
 
-    @_overload
-    async def index_info(self, symbol: str) -> _models.IndexInfo:
+    @overload
+    async def index_info(self, symbol: str) -> models.IndexInfo:
         ...
 
     async def index_info(
-        self, symbol: _Optional[str] = None
-    ) -> _models.IndexInfoResponse:
-        request = _models.IndexInfoRequest(symbol=symbol)
+        self, symbol: Optional[str] = None
+    ) -> models.IndexInfoResponse:
+        request = models.IndexInfoRequest(symbol=symbol)
         return await self.request(
-            _Method.GET,
+            Method.GET,
             "indexInfo",
-            _SecurityLevel.NONE,
-            _models.IndexInfoResponse,  # type: ignore
+            SecurityLevel.NONE,
+            models.IndexInfoResponse,  # type: ignore
             request,
         )

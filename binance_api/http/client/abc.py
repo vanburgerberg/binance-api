@@ -1,17 +1,17 @@
-from abc import ABC as _ABC
-from abc import abstractmethod as _abstractmethod
-from collections.abc import Mapping as _Mapping
-from typing import Any as _Any
-from typing import Optional as _Optional
+from abc import ABC, abstractmethod
+from collections.abc import Mapping
+from typing import Any, Optional
+
+__all__ = ["Client"]
 
 
-class Client(_ABC):
-    @_abstractmethod
+class Client(ABC):
+    @abstractmethod
     async def request(
         self,
         method: str,
         url: str,
         *,
-        headers: _Optional[_Mapping[str, str]] = None,
-    ) -> _Any:
+        headers: Optional[Mapping[str, str]] = None,
+    ) -> Any:
         pass

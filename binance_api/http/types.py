@@ -1,7 +1,9 @@
-from enum import auto as _auto
+from enum import auto
 
-from binance_api.types import StrEnum as _StrEnum
+from binance_api.types import StrEnum
+
+__all__ = ["Method"]
 
 
-class Method(_StrEnum):
-    GET = _auto()
+class Method(StrEnum):
+    GET = auto()

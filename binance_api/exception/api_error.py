@@ -1,8 +1,8 @@
-from binance_api.exception.code_exception import (
-    CodeException as _CodeException,
-)
+from binance_api.exception.code_exception import CodeException
+
+__all__ = ["APIError"]
 
 
-class APIError(_CodeException):
+class APIError(CodeException):
     def __init__(self, message: str):
         self.message = message

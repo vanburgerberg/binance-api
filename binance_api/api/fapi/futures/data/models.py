@@ -1,48 +1,56 @@
-from datetime import datetime as _datetime
-from typing import Optional as _Optional
+from datetime import datetime
+from typing import Optional
 
-from pydantic import BaseModel as _BaseModel
-from pydantic import Field as _Field
-from pydantic import PositiveFloat as _PositiveFloat
+from pydantic import BaseModel, Field, PositiveFloat
 
-import binance_api.api.fapi.futures.data.types as _types
-from binance_api.types import Timestamp as _Timestamp
+from binance_api.api.fapi.futures.data import types
+from binance_api.types import Timestamp
+
+__all__ = [
+    "OpenInterestInfo",
+    "OpenInterestHistResponse",
+    "Request",
+    "LongShortRatioInfo",
+    "LongShortRatioResponse",
+    "TakerLongShortRatioInfo",
+    "TakerLongShortRatioResponse",
+]
 
 
-class OpenInterestInfo(_BaseModel):
+class OpenInterestInfo(BaseModel):
     symbol: str
-    sum: _PositiveFloat = _Field(alias="sumOpenInterest")
-    sum_value: _PositiveFloat = _Field(alias="sumOpenInterestValue")
-    time: _datetime = _Field(alias="timestamp")
+    sum: PositiveFloat = Field(alias="sumOpenInterest")
+    sum_value: PositiveFloat = Field(alias="sumOpenInterestValue")
+    time: datetime = Field(alias="timestamp")
 
 
 OpenInterestHistResponse = list[OpenInterestInfo]
 
 
-class Request(_BaseModel):
+class Request(BaseModel):
     symbol: str
-    period: _types.Period
-    limit: _Optional[int] = _Field(ge=1, le=500)
-    startTime: _Optional[_Timestamp] = _Field(alias="start_time")
-    endTime: _Optional[_Timestamp] = _Field(alias="end_time")
+    period: types.Period
+    limit: Optional[int] = Field(ge=1, le=500)
+    startTime: Optional[Timestamp] = Field(alias="start_time")
+    endTime: Optional[Timestamp] = Field(alias="end_time")
 
 
-class LongShortRatioInfo(_BaseModel):
+class LongShortRatioInfo(BaseModel):
     symbol: str
-    long_short_ratio: _PositiveFloat = _Field(alias="longShortRatio")
-    long_ratio: _PositiveFloat = _Field(alias="longAccount")
-    short_ratio: _PositiveFloat = _Field(alias="shortAccount")
-    timestamp: _datetime
+    long_short_ratio: PositiveFloat = Field(alias="longShortRatio")
+    long_ratio: PositiveFloat = Field(alias="longAccount")
+    short_ratio: PositiveFloat = Field(alias="shortAccount")
+    timestamp: datetime
 
 
 LongShortRatioResponse = list[LongShortRatioInfo]
 
 
-class TakerLongShortRatioInfo(_BaseModel):
-    buy_sell_ratio: _PositiveFloat = _Field(alias="buySellRatio")
-    buy_volume: _PositiveFloat = _Field(alias="buyVol")
-    sell_volume: _PositiveFloat = _Field(alias="sellVol")
-    timestamp: _datetime
+class TakerLongShortRatioInfo(BaseModel):
+    buy_sell_ratio: PositiveFloat = Field(alias="buySellRatio")
+    buy_volume: PositiveFloat = Field(alias="buyVol")
+    sell_volume: PositiveFloat = Field(alias="sellVol")
+    timestamp: datetime
 
 
 TakerLongShortRatioResponse = list[TakerLongShortRatioInfo]

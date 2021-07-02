@@ -1,73 +1,89 @@
-from datetime import datetime as _datetime
-from typing import Optional as _Optional
-from typing import Union as _Union
+from datetime import datetime
+from typing import Optional, Union
 
-from pydantic import BaseModel as _BaseModel
-from pydantic import Field as _Field
-from pydantic import NonNegativeInt as _NonNegativeInt
-from pydantic import PositiveFloat as _PositiveFloat
-from pydantic import PositiveInt as _PositiveInt
+from pydantic import (
+    BaseModel,
+    Field,
+    NonNegativeInt,
+    PositiveFloat,
+    PositiveInt,
+)
+
+__all__ = [
+    "Ticker24hr",
+    "Ticker24hrNoSymbolResponse",
+    "Ticker24hrResponse",
+    "Ticker24hrRequest",
+    "PriceInfo",
+    "PriceInfoNoSymbolResponse",
+    "PriceInfoResponse",
+    "PriceInfoRequest",
+    "Book",
+    "BookNoSymbolResponse",
+    "BookResponse",
+    "BookRequest",
+]
 
 
-class Ticker24hr(_BaseModel):
+class Ticker24hr(BaseModel):
     symbol: str
-    price_change: float = _Field(alias="priceChange")
-    price_change_percent: float = _Field(alias="priceChangePercent")
-    weighted_avg_price: _PositiveFloat = _Field(alias="weightedAvgPrice")
-    last_price: _PositiveFloat = _Field(alias="lastPrice")
-    last_qty: _PositiveFloat = _Field(alias="lastQty")
-    open_price: _PositiveFloat = _Field(alias="openPrice")
-    high_price: _PositiveFloat = _Field(alias="highPrice")
-    low_price: _PositiveFloat = _Field(alias="lowPrice")
-    volume: _PositiveFloat = _Field(alias="volume")
-    quote_volume: _PositiveFloat = _Field(alias="quoteVolume")
-    open_time: _datetime = _Field(alias="openTime")
-    close_time: _datetime = _Field(alias="closeTime")
-    first_trade_id: _PositiveInt = _Field(alias="firstId")
-    last_trade_id: _PositiveInt = _Field(alias="lastId")
-    trade_count: _NonNegativeInt = _Field(alias="count")
+    price_change: float = Field(alias="priceChange")
+    price_change_percent: float = Field(alias="priceChangePercent")
+    weighted_avg_price: PositiveFloat = Field(alias="weightedAvgPrice")
+    last_price: PositiveFloat = Field(alias="lastPrice")
+    last_qty: PositiveFloat = Field(alias="lastQty")
+    open_price: PositiveFloat = Field(alias="openPrice")
+    high_price: PositiveFloat = Field(alias="highPrice")
+    low_price: PositiveFloat = Field(alias="lowPrice")
+    volume: PositiveFloat = Field(alias="volume")
+    quote_volume: PositiveFloat = Field(alias="quoteVolume")
+    open_time: datetime = Field(alias="openTime")
+    close_time: datetime = Field(alias="closeTime")
+    first_trade_id: PositiveInt = Field(alias="firstId")
+    last_trade_id: PositiveInt = Field(alias="lastId")
+    trade_count: NonNegativeInt = Field(alias="count")
 
 
 Ticker24hrNoSymbolResponse = list[Ticker24hr]
 
 
-Ticker24hrResponse = _Union[Ticker24hr, Ticker24hrNoSymbolResponse]
+Ticker24hrResponse = Union[Ticker24hr, Ticker24hrNoSymbolResponse]
 
 
-class Ticker24hrRequest(_BaseModel):
-    symbol: _Optional[str]
+class Ticker24hrRequest(BaseModel):
+    symbol: Optional[str]
 
 
-class PriceInfo(_BaseModel):
+class PriceInfo(BaseModel):
     symbol: str
-    price: _PositiveFloat
-    time: _datetime
+    price: PositiveFloat
+    time: datetime
 
 
 PriceInfoNoSymbolResponse = list[PriceInfo]
 
 
-PriceInfoResponse = _Union[PriceInfo, PriceInfoNoSymbolResponse]
+PriceInfoResponse = Union[PriceInfo, PriceInfoNoSymbolResponse]
 
 
-class PriceInfoRequest(_BaseModel):
-    symbol: _Optional[str]
+class PriceInfoRequest(BaseModel):
+    symbol: Optional[str]
 
 
-class Book(_BaseModel):
+class Book(BaseModel):
     symbol: str
-    bid_price: _PositiveFloat = _Field(alias="bidPrice")
-    bid_qty: _PositiveFloat = _Field(alias="bidQty")
-    ask_price: _PositiveFloat = _Field(alias="askPrice")
-    ask_qty: _PositiveFloat = _Field(alias="askQty")
-    time: _datetime
+    bid_price: PositiveFloat = Field(alias="bidPrice")
+    bid_qty: PositiveFloat = Field(alias="bidQty")
+    ask_price: PositiveFloat = Field(alias="askPrice")
+    ask_qty: PositiveFloat = Field(alias="askQty")
+    time: datetime
 
 
 BookNoSymbolResponse = list[Book]
 
 
-BookResponse = _Union[Book, BookNoSymbolResponse]
+BookResponse = Union[Book, BookNoSymbolResponse]
 
 
-class BookRequest(_BaseModel):
-    symbol: _Optional[str]
+class BookRequest(BaseModel):
+    symbol: Optional[str]

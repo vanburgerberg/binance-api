@@ -1,84 +1,98 @@
-from enum import auto as _auto
+from enum import auto
 
-from binance_api.types import IntEnum as _IntEnum
-from binance_api.types import StrEnum as _StrEnum
+from binance_api.types import IntEnum, StrEnum
 
-
-class RateLimitInterval(_StrEnum):
-    MINUTE = _auto()
-    SECOND = _auto()
-
-
-class RateLimitType(_StrEnum):
-    REQUEST_WEIGHT = _auto()
-    ORDERS = _auto()
-
-
-class ContractType(_StrEnum):
-    PERPETUAL = _auto()
-    CURRENT_MONTH = _auto()
-    NEXT_MONTH = _auto()
-    CURRENT_QUARTER = _auto()
-    NEXT_QUARTER = _auto()
-    EMPTY = ""
+__all__ = [
+    "RateLimitInterval",
+    "RateLimitType",
+    "ContractType",
+    "ContractStatus",
+    "UnderlyingType",
+    "UnderlyingSubType",
+    "FilterType",
+    "OrderType",
+    "TimeInForce",
+    "Timezone",
+    "DepthLimit",
+    "KlineInterval",
+]
 
 
-class ContractStatus(_StrEnum):
-    PENDING_TRADING = _auto()
-    TRADING = _auto()
-    PRE_DELIVERING = _auto()
-    DELIVERING = _auto()
-    DELIVERED = _auto()
-    PRE_SETTLE = _auto()
-    SETTLING = _auto()
-    CLOSE = _auto()
+class RateLimitInterval(StrEnum):
+    MINUTE = auto()
+    SECOND = auto()
 
 
-class UnderlyingType(_StrEnum):
-    COIN = _auto()
-    INDEX = _auto()
+class RateLimitType(StrEnum):
+    REQUEST_WEIGHT = auto()
+    ORDERS = auto()
 
 
-class UnderlyingSubType(_StrEnum):
-    STORAGE = _auto()
-    DEFI = _auto()
-    HOT = _auto()
-    BSC = _auto()
-    NFT = _auto()
+class ContractType(StrEnum):
+    PERPETUAL = auto()
+    CURRENT_MONTH = auto()
+    NEXT_MONTH = auto()
+    CURRENT_QUARTER = auto()
+    NEXT_QUARTER = auto()
+    NONE = ""
 
 
-class FilterType(_StrEnum):
+class ContractStatus(StrEnum):
+    PENDING_TRADING = auto()
+    TRADING = auto()
+    PRE_DELIVERING = auto()
+    DELIVERING = auto()
+    DELIVERED = auto()
+    PRE_SETTLE = auto()
+    SETTLING = auto()
+    CLOSE = auto()
+
+
+class UnderlyingType(StrEnum):
+    COIN = auto()
+    INDEX = auto()
+
+
+class UnderlyingSubType(StrEnum):
+    STORAGE = auto()
+    DEFI = auto()
+    HOT = auto()
+    BSC = auto()
+    NFT = auto()
+
+
+class FilterType(StrEnum):
     PRICE = "PRICE_FILTER"
-    LOT_SIZE = _auto()
-    MARKET_LOT_SIZE = _auto()
+    LOT_SIZE = auto()
+    MARKET_LOT_SIZE = auto()
     MAX_ORDER_COUNT = "MAX_NUM_ORDERS"
     MAX_ALGO_ORDER_COUNT = "MAX_NUM_ALGO_ORDERS"
-    MIN_NOTIONAL = _auto()
-    PERCENT_PRICE = _auto()
+    MIN_NOTIONAL = auto()
+    PERCENT_PRICE = auto()
 
 
-class OrderType(_StrEnum):
-    LIMIT = _auto()
-    MARKET = _auto()
-    STOP = _auto()
-    STOP_MARKET = _auto()
-    TAKE_PROFIT = _auto()
-    TAKE_PROFIT_MARKET = _auto()
-    TRAILING_STOP_MARKET = _auto()
+class OrderType(StrEnum):
+    LIMIT = auto()
+    MARKET = auto()
+    STOP = auto()
+    STOP_MARKET = auto()
+    TAKE_PROFIT = auto()
+    TAKE_PROFIT_MARKET = auto()
+    TRAILING_STOP_MARKET = auto()
 
 
-class TimeInForce(_StrEnum):
-    GTC = _auto()
-    IOC = _auto()
-    FOK = _auto()
-    GTX = _auto()
+class TimeInForce(StrEnum):
+    GTC = auto()
+    IOC = auto()
+    FOK = auto()
+    GTX = auto()
 
 
-class Timezone(_StrEnum):
-    UTC = _auto()
+class Timezone(StrEnum):
+    UTC = auto()
 
 
-class DepthLimit(_IntEnum):
+class DepthLimit(IntEnum):
     FIVE = 5
     TEN = 10
     TWENTY = 20
@@ -88,7 +102,7 @@ class DepthLimit(_IntEnum):
     THOUSAND = 1000
 
 
-class KlineInterval(_StrEnum):
+class KlineInterval(StrEnum):
     ONE_MINUTE = "1m"
     THREE_MINUTES = "3m"
     FIVE_MINUTES = "5m"

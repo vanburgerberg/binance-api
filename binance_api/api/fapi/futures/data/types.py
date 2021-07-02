@@ -1,7 +1,9 @@
-from binance_api.types import StrEnum as _StrEnum
+from binance_api.types import StrEnum
+
+__all__ = ["Period"]
 
 
-class Period(_StrEnum):
+class Period(StrEnum):
     FIVE_MINUTES = "5m"
     FIFTEEN_MINUTES = "15m"
     THIRTY_MINUTES = "30m"
